@@ -1,9 +1,9 @@
 {{yield}}
 
-{{#if context}}
+{{#if supported}}
   <audio data-role="playback"></audio>
   {{#if record.isRunning}}
-    <button onClick={{perform boop}}>boop</button>
+    {{#unless boop.isRunning}}<button onClick={{perform boop}}>boop</button>{{/unless}}
   {{else}}
     <button onClick={{perform record}}>record</button>
   {{/if}}

@@ -1,70 +1,45 @@
 import Component from '@ember/component';
 import { timeout, task } from 'ember-concurrency';
-import { defer } from 'rsvp';
+import { computed } from '@ember/object';
 
 const Audio = window.AudioContext || window.webkitAudioContext;
 
 export default Component.extend({
-
-  didInsertElement() {
-    const result = this._super(...arguments);
-
-    if (!Audio) {
-      return result;
-    }
-
-    const context = new Audio();
-    this.set('context', context);
-    return result;
-  },
+  supported: computed(() => !!Audio),
 
   record: task(function * () {
-    const context = this.get('context');
-    const destination = context.createMediaStreamDestination();
-    const recorder = new MediaRecorder(destination.stream);
-    this.set('destination', destination);
+    const context = new Audio();
+    const analyzer = context.createAnalyser();
+    analyzer.fftSize = 2048;
+    analyzer.connect(context.destination);
 
-    const { promise, resolve } = defer();
-    const chunks = [];
+    const gain = context.createGain();
+    gain.gain.setValueAtTime(0.0, 0);
 
-    recorder.ondataavailable = function(evt) {
-      chunks.push(evt.data);
-    };
+    gain.connect(analyzer);
 
-    recorder.onstop = function() {
-      const blob = new Blob(chunks, { type: 'audio/ogg; codecs=opus' });
-      resolve(blob);
-    };
+    this.set('audio', { gain, context });
 
-    recorder.start();
     yield timeout(3e3);
-    recorder.stop();
 
-    const data = yield promise;
-    const [playback] = this.$('[data-role=playback]');
-    playback.src = URL.createObjectURL(data);
-    playback.play();
+    yield gain.disconnect();
+    yield analyzer.disconnect();
+    yield context.close();
   }),
 
   boop: task(function * () {
-    const context = this.get('context');
-    const destination = this.get('destination');
-
-    const gain = context.createGain();
-    gain.gain.value = 0.2;
-    gain.connect(context.destination);
-
+    const { gain, context } = this.get('audio');
     const oscillator = context.createOscillator();
-    oscillator.type = 'square';
-    oscillator.frequency.value = 500;
-    oscillator.connect(gain).connect(destination);
-    oscillator.start(0);
-
-    yield timeout(5e2);
-
-    oscillator.stop();
-    oscillator.disconnect();
-    gain.disconnect();
+    gain.gain.setValueAtTime(1.0, context.currentTime);
+    oscillator.type = 'sine';
+    oscillator.connect(gain);
+    yield oscillator.start();
+    yield timeout(2e2);
+    oscillator.frequency.setValueAtTime(500, context.currentTime);
+    yield timeout(2e2);
+    gain.gain.setValueAtTime(0.0, context.currentTime);
+    yield oscillator.stop();
+    yield oscillator.disconnect();
   }),
 
 });
