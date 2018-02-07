@@ -1,0 +1,6 @@
+commit:
+  message:
+    patterns:
+      - "^[a-z]"
+      - "^chore\\(\\S+\\)"
+      - "^\\[ghp\\]"
