@@ -1,0 +1,12 @@
+{{yield}}
+
+{{#if context}}
+  <audio data-role="playback"></audio>
+  {{#if record.isRunning}}
+    <button onClick={{perform boop}}>boop</button>
+  {{else}}
+    <button onClick={{perform record}}>record</button>
+  {{/if}}
+{{else}}
+    Audio not supported.
+{{/if}}
