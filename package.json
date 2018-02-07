@@ -11,9 +11,9 @@
   },
   "repository": "",
   "scripts": {
-    "build": "ember build",
-    "lint:js": "eslint ./*.js app config lib server tests",
-    "start": "ember serve",
+    "build": "LINT=true ember build",
+    "lint:js": "eslint app config lib server tests",
+    "start": "LINT=true ember serve",
     "test": "ember test"
   },
   "devDependencies": {
@@ -33,6 +33,7 @@
     "ember-cli-uglify": "^2.0.0",
     "ember-data": "~2.18.0",
     "ember-export-application-global": "^2.0.0",
+    "ember-i18n": "^5.1.0",
     "ember-load-initializers": "^1.0.0",
     "ember-resolver": "^4.0.0",
     "ember-source": "~2.18.0",
