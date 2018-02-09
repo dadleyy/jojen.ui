@@ -1,0 +1,5 @@
+@for $step from $min-transition-inc through $max-transition-inc
+  $amount: (100 * $step) + unquote("ms")
+
+  .transition-#{$step}
+    transition: all $amount ease

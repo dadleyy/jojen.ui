@@ -1,12 +1,1 @@
-{{yield}}
-
-{{#if supported}}
-  <audio data-role="playback"></audio>
-  {{#if record.isRunning}}
-    {{#unless boop.isRunning}}<button onClick={{perform boop}}>boop</button>{{/unless}}
-  {{else}}
-    <button onClick={{perform record}}>record</button>
-  {{/if}}
-{{else}}
-    Audio not supported.
-{{/if}}
+<button onClick={{action 'attack'}}>{{fa-icon "music"}}</button>

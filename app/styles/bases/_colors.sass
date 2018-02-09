@@ -1,0 +1,15 @@
+$index: 0
+
+@each $color in $colors
+  $index: $index + 1
+
+  .border-color-#{$index}
+    border-color: $color
+    border-top-color: $color
+    border-left-color: $color
+
+  .bg-#{$index}
+    background-color: $color
+
+  .fg-#{$index}
+    color: $color

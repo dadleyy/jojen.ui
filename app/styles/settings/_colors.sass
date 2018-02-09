@@ -1,0 +1,19 @@
+$min-color-degree: 0
+$max-color-degree: 36
+$color-step-size: 10
+$start-color: #aaeeaa
+$darkness-min-step: 0
+$darkness-max-step: 5
+$darkness-step-size: 20
+
+$colors: ()
+
+@for $step from $darkness-min-step through $darkness-max-step
+  $amount: $step * $darkness-step-size
+  $color: darken(#fff, $amount)
+  $colors: append($colors, $color)
+
+@for $step from $min-color-degree through $max-color-degree
+  $rotation: $step * $color-step-size
+  $color: adjust-hue($start-color, $rotation)
+  $colors: append($colors, $color)

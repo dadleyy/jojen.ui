@@ -1,0 +1,15 @@
+.border-solid
+  border-style: solid
+
+@for $amount from $min-border-width through $max-border-width
+  .border-#{$amount}
+    border-width: $amount + unquote("px")
+
+  .border-right-#{$amount}
+    border-right-width: $amount + unquote("px")
+
+  .border-bottom-#{$amount}
+    border-bottom-width: $amount + unquote("px")
+
+  .border-left-#{$amount}
+    border-left-width: $amount + unquote("px")

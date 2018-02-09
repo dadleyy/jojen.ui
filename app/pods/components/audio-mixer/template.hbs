@@ -1,0 +1,24 @@
+{{#if support}}
+  {{yield}}
+  <div data-role="actions-container">
+    <button disabled={{recording}} onClick={{pipe (perform start) (try-perform delay)}}>
+      {{fa-icon "circle"}}
+    </button>
+    <button disabled={{not recording}} onClick={{perform stop}}>
+      {{fa-icon "stop"}}
+    </button>
+  </div>
+  <div data-role="timer-container">
+    {{#if (and recording (gt timer 0))}}
+      {{timer}}
+    {{/if}}
+  </div>
+  <div data-role="controls-container" class="display-flex align-items-center margin-top-2">
+    {{#if (and recording (eq timer 0))}}
+      <div class="margin-right-2">{{t 'live'}}</div>
+      {{audio-joystick context=context}}
+    {{/if}}
+  </div>
+{{else}}
+  <p data-role="no-audio-support">Audio API not supported</p>
+{{/if}}

@@ -1,0 +1,26 @@
+@for $step from $min-spacing-increment through $max-spacing-increment
+  $amount: $step * $spacing-increment-size
+  $value: $amount + unquote("rem")
+
+  .padding-#{$step}
+    padding: $value
+
+  .padding-top-#{$step}
+    padding-top: $value
+
+  .padding-right-#{$step}
+    padding-right: $value
+
+  .padding-bottom-#{$step}
+    padding-bottom: $value
+
+  .padding-left-#{$step}
+    padding-left: $value
+
+  .padding-lr-#{$step}
+    padding-right: $value
+    padding-left: $value
+
+  .padding-tb-#{$step}
+    padding-top: $value
+    padding-bottom: $value

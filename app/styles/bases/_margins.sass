@@ -1,0 +1,26 @@
+@for $step from $min-spacing-increment through $max-spacing-increment
+  $amount: $step * $spacing-increment-size
+  $value: $amount + unquote("rem")
+
+  .margin-#{$step}
+    margin: $value
+
+  .margin-top-#{$step}
+    margin-top: $value
+
+  .margin-right-#{$step}
+    margin-right: $value
+
+  .margin-bottom-#{$step}
+    margin-bottom: $value
+
+  .margin-left-#{$step}
+    margin-left: $value
+
+  .margin-lr-#{$step}
+    margin-right: $value
+    margin-left: $value
+
+  .margin-tb-#{$step}
+    margin-top: $value
+    margin-bottom: $value
